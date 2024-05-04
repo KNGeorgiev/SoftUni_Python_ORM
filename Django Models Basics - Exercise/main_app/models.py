@@ -29,4 +29,13 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
+
+class UserProfile(models.Model):
+    username = models.CharField(max_length=65, unique=True)
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
+    email = models.EmailField(unique=True, default='students@softuni.bg')
+    bio = models.TextField(max_length=120)
+    profile_image_url = models.URLField()
+    created_at = models.DateTimeField(auto_now_add=True)
