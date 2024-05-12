@@ -4,6 +4,7 @@ from main_app.models import EventRegistration
 from main_app.models import Movie
 from main_app.models import Student
 from main_app.models import Supplier
+from main_app.models import Course
 
 @admin.register(EventRegistration)
 class EventRegistrationAdmin(admin.ModelAdmin):
@@ -84,3 +85,29 @@ class SupplierAdmin(admin.ModelAdmin):
         ('Information', {
             'fields': ('name', 'contact_person', 'email', 'address')
         })]
+    
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = [
+        'title',
+        'lecturer',
+        'price',
+        'start_date'
+    ]
+    list_filter = [
+        'is_published',
+        'lecturer'
+    ]
+    search_fields = [
+        'title',
+        'lecturer'
+    ]
+    fieldsets = [
+        ('Course Information', {
+            'fields': ('title', 'lecturer', 'price', 'start_date', 'is_published')
+        }),
+        ('Description', {
+            'fields': ('description',)
+        })
+    ]
+    readonly_fields = ['start_date']
