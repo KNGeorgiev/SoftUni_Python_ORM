@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Shoe(models.Model):
     brand = models.CharField(max_length=25)
     size = models.PositiveIntegerField()
@@ -17,6 +18,7 @@ class EventRegistration(models.Model):
     def __str__(self):
         return f"{self.participant_name} - {self.event_name}"
     
+
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     director = models.CharField(max_length=100)
@@ -25,6 +27,7 @@ class Movie(models.Model):
 
     def __str__(self):
         return f'Movie "{self.title}" by {self.director}'
+
 
 class Student(models.Model):
     first_name = models.CharField(max_length=50)
@@ -36,6 +39,7 @@ class Student(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+
 class Supplier(models.Model):
     name = models.CharField(max_length=100)
     contact_person = models.CharField(max_length=50)
@@ -45,7 +49,8 @@ class Supplier(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.phone}'
-    
+
+
 class Course(models.Model):
     title = models.CharField(max_length=90)
     lecturer = models.CharField(max_length=90)
@@ -57,6 +62,7 @@ class Course(models.Model):
     def __str__(self):
         return f'{self.title} - {self.lecturer}'
 
+
 class Person(models.Model):
     name = models.CharField(max_length=40)
     age = models.PositiveIntegerField()
@@ -64,3 +70,16 @@ class Person(models.Model):
 
     def __str__(self):
         return f'Name: {self.name}'
+
+
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+    rarity = models.CharField(max_length=20, default='empty')
+
+
+class Smartphone(models.Model):
+    brand = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    category = models.CharField(max_length=20, default="empty")
