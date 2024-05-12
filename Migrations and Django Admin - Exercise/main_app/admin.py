@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from main_app.models import EventRegistration
 from main_app.models import Movie
+from main_app.models import Student
 
 @admin.register(EventRegistration)
 class EventRegistrationAdmin(admin.ModelAdmin):
@@ -34,4 +35,29 @@ class MovieAdmin(admin.ModelAdmin):
     search_fields = [
         'title',
         'director'
+    ]
+
+@admin.register(Student)
+class StudentAdmin(admin.ModelAdmin):
+    list_display = [
+        'first_name',
+        'last_name',
+        'age',
+        'grade'
+    ]
+    list_filter = [
+        'age',
+        'grade',
+        'date_of_birth'
+    ]
+    search_fields = [
+        'first_name'
+    ]
+    fieldsets = [
+        ('Personal Information', {
+            'fields': ('first_name', 'last_name', 'age', 'date_of_birth')
+        }),
+        ('Academic Information', {
+            'fields': ('grade',)
+        })
     ]
