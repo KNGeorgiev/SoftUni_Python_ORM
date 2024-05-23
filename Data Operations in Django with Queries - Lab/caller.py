@@ -37,6 +37,16 @@ def add_students():
         last_name='Wilson',
         birth_date='1996-11-25',
         email='bob.wilson@university.com')
-    
+
 # add_students()
 # print(Student.objects.all())
+
+def get_students_info():
+    student_data = []
+
+    for s in Student.objects.all():
+        student_data.append(f"Student №{s.student_id}: {s.first_name} {s.last_name}; Email: {s.email}")
+    
+    return '\n'.join(student_data)
+
+# print(get_students_info())
