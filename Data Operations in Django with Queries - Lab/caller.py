@@ -50,3 +50,20 @@ def get_students_info():
     return '\n'.join(student_data)
 
 # print(get_students_info())
+
+def update_students_emails():
+    
+    for s in Student.objects.all():
+        email_parts = s.email.split("@")
+        new_email = f"{email_parts[0]}@uni-students.com"
+        s.email = new_email
+        s.save()
+
+    # for s in Student.objects.all():
+    #     new_email = s.email.replace('university.com', 'uni-students.com')
+    #     s.email = new_email
+    #     s.save()
+
+# update_students_emails()
+# for student in Student.objects.all():
+#     print(student.email)
