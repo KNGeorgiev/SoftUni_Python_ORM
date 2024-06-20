@@ -1,7 +1,5 @@
-from datetime import date
-
 from django.db import models
-
+from datetime import date
 
 class Employee(models.Model):
     name = models.CharField(max_length=30)
@@ -10,7 +8,6 @@ class Employee(models.Model):
     birth_date = models.DateField()
     works_full_time = models.BooleanField()
     created_on = models.DateTimeField(auto_now_add=True)
-
 
 class Department(models.Model):
     code = models.CharField(max_length=4, unique=True, primary_key=True)
@@ -29,8 +26,7 @@ class Department(models.Model):
         null=True
     )
 
-    last_edited_on = models.DateTimeField(auto_now_add=True, editable=False)
-
+    last_edited_on = models.DateTimeField(auto_now=True, editable=False)
 
 class Project(models.Model):
     name = models.CharField(max_length=100, unique=True)
