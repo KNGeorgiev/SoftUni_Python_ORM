@@ -6,7 +6,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
 
-from main_app.models import Pet, Artifact
+from main_app.models import Pet, Artifact, Location
 
 
 # def create_pet(name: str, species: str):
@@ -24,31 +24,61 @@ from main_app.models import Pet, Artifact
 # print(create_pet('Rocky', 'Hamster'))
 
 
-def create_artifact(name: str, origin: str, age: int, description: str, is_magical: bool):
-    artifact = Artifact(
-        name = name,
-        origin = origin,
-        age = age,
-        description = description,
-        is_magical = is_magical
-    )
-    artifact.save()
+# def create_artifact(name: str, origin: str, age: int, description: str, is_magical: bool):
+#     artifact = Artifact(
+#         name = name,
+#         origin = origin,
+#         age = age,
+#         description = description,
+#         is_magical = is_magical
+#     )
+#     artifact.save()
 
-    return f"The artifact {artifact.name} is {artifact.age} years old!"
+#     return f"The artifact {artifact.name} is {artifact.age} years old!"
 
 
-def rename_artifact(artifact: Artifact, new_name: str):
+# def rename_artifact(artifact: Artifact, new_name: str):
     
-    if artifact.is_magical and artifact.age > 250:
-        artifact.name = new_name
-    artifact.save()
+#     if artifact.is_magical and artifact.age > 250:
+#         artifact.name = new_name
+#     artifact.save()
 
 
-def delete_all_artifacts():
-    Artifact.objects.all().delete()
+# def delete_all_artifacts():
+#     Artifact.objects.all().delete()
 
-delete_all_artifacts()
-print(create_artifact('Ancient Sword', 'Lost Kingdom', 500, 'A legendary sword with a rich history', True))
-artifact_object = Artifact.objects.get(name='Ancient Sword')
-rename_artifact(artifact_object, 'Ancient Shield')
-print(artifact_object.name)
+# delete_all_artifacts()
+# print(create_artifact('Ancient Sword', 'Lost Kingdom', 500, 'A legendary sword with a rich history', True))
+# artifact_object = Artifact.objects.get(name='Ancient Sword')
+# rename_artifact(artifact_object, 'Ancient Shield')
+# print(artifact_object.name)
+
+
+def show_all_locations():
+    locations = Location.objects.all().order_by('-id')
+    result = ''
+
+    for l in locations:
+        result += f'{l.name} has a population of {l.population}!\n'
+    return result
+    
+
+def new_capital():
+    data = Location.objects.first()
+    if data:
+        data.is_capital = True
+        data.save()
+
+
+def get_capitals():
+    capitals = Location.objects.filter(is_capital=True).values('name')
+    return capitals
+
+
+def delete_first_location():
+    Location.objects.first().delete()
+
+
+print(show_all_locations())
+print(new_capital())
+print(get_capitals())
