@@ -52,13 +52,28 @@ from main_app.models import Student
 # print(Student.objects.all())
 
 
-def get_students_info():
+# def get_students_info():
+#     students = Student.objects.all()
+#     result = ""
+
+#     for student in students:
+#         result += f"Student №{student.student_id}: {student.first_name} {student.last_name}; Email: {student.email}\n"
+
+#     return result
+
+# print(get_students_info())
+
+
+def update_students_emails():
     students = Student.objects.all()
-    result = ""
 
     for student in students:
-        result += f"Student №{student.student_id}: {student.first_name} {student.last_name}; Email: {student.email}\n"
+        first_part, second_part = student.email.split('@')
+        second_part = '@uni-students.com'
+        student.email = first_part + second_part
+        student.save()
 
-    return result
 
-print(get_students_info())
+update_students_emails()
+for student in Student.objects.all():
+    print(student.email)
