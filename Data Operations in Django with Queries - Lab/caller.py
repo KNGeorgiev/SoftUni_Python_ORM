@@ -64,16 +64,25 @@ from main_app.models import Student
 # print(get_students_info())
 
 
-def update_students_emails():
-    students = Student.objects.all()
+# def update_students_emails():
+#     students = Student.objects.all()
 
-    for student in students:
-        first_part, second_part = student.email.split('@')
-        second_part = '@uni-students.com'
-        student.email = first_part + second_part
-        student.save()
+#     for student in students:
+#         first_part, second_part = student.email.split('@')
+#         second_part = '@uni-students.com'
+#         student.email = first_part + second_part
+#         student.save()
 
 
-update_students_emails()
-for student in Student.objects.all():
-    print(student.email)
+# update_students_emails()
+# for student in Student.objects.all():
+#     print(student.email)
+
+
+def truncate_students():
+    Student.objects.all().delete()
+
+
+truncate_students()
+print(Student.objects.all())
+print(f"Number of students: {Student.objects.count()}")
