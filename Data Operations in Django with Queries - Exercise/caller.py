@@ -6,7 +6,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
 
-from main_app.models import Pet, Artifact, Location
+from main_app.models import Pet, Artifact, Location, Car
 
 
 # def create_pet(name: str, species: str):
@@ -54,31 +54,52 @@ from main_app.models import Pet, Artifact, Location
 # print(artifact_object.name)
 
 
-def show_all_locations():
-    locations = Location.objects.all().order_by('-id')
-    result = ''
+# def show_all_locations():
+#     locations = Location.objects.all().order_by('-id')
+#     result = ''
 
-    for l in locations:
-        result += f'{l.name} has a population of {l.population}!\n'
-    return result
+#     for l in locations:
+#         result += f'{l.name} has a population of {l.population}!\n'
+#     return result
     
 
-def new_capital():
-    data = Location.objects.first()
-    if data:
-        data.is_capital = True
-        data.save()
+# def new_capital():
+#     data = Location.objects.first()
+#     if data:
+#         data.is_capital = True
+#         data.save()
 
 
-def get_capitals():
-    capitals = Location.objects.filter(is_capital=True).values('name')
-    return capitals
+# def get_capitals():
+#     capitals = Location.objects.filter(is_capital=True).values('name')
+#     return capitals
 
 
-def delete_first_location():
-    Location.objects.first().delete()
+# def delete_first_location():
+#     Location.objects.first().delete()
 
 
-print(show_all_locations())
-print(new_capital())
-print(get_capitals())
+# print(show_all_locations())
+# print(new_capital())
+# print(get_capitals())
+
+
+def apply_discount():
+    all_cars = Car.objects.all()
+
+    for car in all_cars:
+        year_sum = sum([int(x) for x in str(car.year)])
+        car.price_with_discount = car.price - car.price * year_sum / 100
+        car.save()
+
+
+def get_recent_cars():
+    return Car.objects.filter(year__gt=2020).values('model', 'price_with_discount')
+
+
+def delete_last_car():
+    Car.objects.last().delete()
+
+
+apply_discount()
+print(get_recent_cars())
