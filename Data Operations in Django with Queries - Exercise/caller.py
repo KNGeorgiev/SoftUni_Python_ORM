@@ -6,7 +6,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
 
-from main_app.models import Pet, Artifact, Location, Car
+from main_app.models import Pet, Artifact, Location, Car, Task, HotelRoom
 
 
 # def create_pet(name: str, species: str):
@@ -84,22 +84,89 @@ from main_app.models import Pet, Artifact, Location, Car
 # print(get_capitals())
 
 
-def apply_discount():
-    all_cars = Car.objects.all()
+# def apply_discount():
+#     all_cars = Car.objects.all()
 
-    for car in all_cars:
-        year_sum = sum([int(x) for x in str(car.year)])
-        car.price_with_discount = car.price - car.price * year_sum / 100
-        car.save()
-
-
-def get_recent_cars():
-    return Car.objects.filter(year__gt=2020).values('model', 'price_with_discount')
+#     for car in all_cars:
+#         year_sum = sum([int(x) for x in str(car.year)])
+#         car.price_with_discount = car.price - car.price * year_sum / 100
+#         car.save()
 
 
-def delete_last_car():
-    Car.objects.last().delete()
+# def get_recent_cars():
+#     return Car.objects.filter(year__gt=2020).values('model', 'price_with_discount')
 
 
-apply_discount()
-print(get_recent_cars())
+# def delete_last_car():
+#     Car.objects.last().delete()
+
+
+# apply_discount()
+# print(get_recent_cars())
+
+
+# def show_unfinished_tasks():
+#     all_tasks = Task.objects.filter(is_finished=False)
+#     result = ''
+
+#     for task in all_tasks:
+#         result += f'Task - {task.title} needs to be done until {task.due_date}!\n'
+    
+#     return result
+
+
+# def complete_odd_tasks():
+#     all_tasks = Task.objects.all()
+
+#     for task in all_tasks:
+#         if task.id % 2 != 0:
+#             task.is_finished = True
+#             task.save()
+
+
+# def encode_and_replace(text: str, task_title: str):
+#     decoded_text = ''.join(chr(ord(x) - 3) for x in text)
+#     Task.objects.filter(title=task_title).update(description=decoded_text)
+
+
+# encode_and_replace("Zdvk#wkh#glvkhv$", "Simple Task")
+# print(Task.objects.get(title='Simple Task').description)
+
+
+def get_deluxe_rooms():
+
+    all_deluxe_rooms = HotelRoom.objects.filter(room_type="Deluxe")
+    result = []
+    for room in all_deluxe_rooms:
+        if room.id % 2 == 0:
+            result.append(str(room))
+
+    return "\n".join(result)
+
+
+def increase_room_capacity():
+    rooms = HotelRoom.objects.all().order_by('id')
+    previous_capacity = 0
+
+    for room in rooms:
+
+        if room.is_reserved:
+            if room.id == HotelRoom.objects.first().id:
+                room.capacity += room.id
+            else:
+                room.capacity += previous_capacity
+
+        previous_capacity = room.capacity
+    
+    HotelRoom.objects.bulk_update(rooms, ['capacity'])
+
+
+def reserve_first_room():
+    room = HotelRoom.objects.first()
+    if not room.is_reserved:
+        room.is_reserved = True
+        room.save()
+
+
+def delete_last_room():
+    HotelRoom.objects.last().delete()
