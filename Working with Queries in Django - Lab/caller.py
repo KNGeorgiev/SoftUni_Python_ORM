@@ -112,20 +112,38 @@ from main_app.models import Author, Book, Review
 
 ###############################################################################
 
-def filter_authors_by_nationalities(recieved_nationality):
-    filtered_authors = Author.objects.filter(nationality=recieved_nationality).order_by('first_name', 'last_name')
+# def filter_authors_by_nationalities(recieved_nationality):
+#     filtered_authors = Author.objects.filter(nationality=recieved_nationality).order_by('first_name', 'last_name')
 
+#     result = [
+#        a.biography if a.biography is not None else f"{a.first_name} {a.last_name}" for a in filtered_authors
+#     ]
+
+#     return "\n".join(result)
+
+# print("American authors:")
+# print(filter_authors_by_nationalities('American'))
+# print()
+# print("British authors:")
+# print(filter_authors_by_nationalities('British'))
+# print()
+# print("Authors with no nationalities:")
+# print(filter_authors_by_nationalities(None))
+
+###############################################################################
+
+def filter_authors_by_birth_year(first_year, second_year):
+    filtered_authors = Author.objects.filter(birth_date__year__range=(first_year, second_year)).order_by("-birth_date")
     result = [
-       a.biography if a.biography is not None else f"{a.first_name} {a.last_name}" for a in filtered_authors
+        f"{a.birth_date}: {a.first_name} {a.last_name}" for a in filtered_authors
     ]
-
     return "\n".join(result)
 
-print("American authors:")
-print(filter_authors_by_nationalities('American'))
+print("Authors born between 1980 and 2000:")
+print(filter_authors_by_birth_year(1980, 2000))
 print()
-print("British authors:")
-print(filter_authors_by_nationalities('British'))
+print("Authors born between 1950 and 1960:")
+print(filter_authors_by_birth_year(1950, 1960))
 print()
-print("Authors with no nationalities:")
-print(filter_authors_by_nationalities(None))
+print("Authors born between 2000 and 2010:")
+print(filter_authors_by_birth_year(2000, 2010))
