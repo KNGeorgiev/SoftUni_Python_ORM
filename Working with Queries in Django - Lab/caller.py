@@ -132,18 +132,37 @@ from main_app.models import Author, Book, Review
 
 ###############################################################################
 
-def filter_authors_by_birth_year(first_year, second_year):
-    filtered_authors = Author.objects.filter(birth_date__year__range=(first_year, second_year)).order_by("-birth_date")
-    result = [
-        f"{a.birth_date}: {a.first_name} {a.last_name}" for a in filtered_authors
-    ]
-    return "\n".join(result)
+# def filter_authors_by_birth_year(first_year, second_year):
+#     filtered_authors = Author.objects.filter(birth_date__year__range=(first_year, second_year)).order_by("-birth_date")
+#     result = [
+#         f"{a.birth_date}: {a.first_name} {a.last_name}" for a in filtered_authors
+#     ]
+#     return "\n".join(result)
 
-print("Authors born between 1980 and 2000:")
-print(filter_authors_by_birth_year(1980, 2000))
+# print("Authors born between 1980 and 2000:")
+# print(filter_authors_by_birth_year(1980, 2000))
+# print()
+# print("Authors born between 1950 and 1960:")
+# print(filter_authors_by_birth_year(1950, 1960))
+# print()
+# print("Authors born between 2000 and 2010:")
+# print(filter_authors_by_birth_year(2000, 2010))
+
+###############################################################################
+
+def change_reviewer_name(reviewer_name, new_name):
+    
+    Review.objects.filter(reviewer_name=reviewer_name).update(reviewer_name=new_name)
+
+    result = Review.objects.all()
+    
+    return result
+
+print("Change Alice Johnson to A.J.:")
+print(change_reviewer_name("Alice Johnson", "A.J."))
 print()
-print("Authors born between 1950 and 1960:")
-print(filter_authors_by_birth_year(1950, 1960))
+print("Change Bob Wilson to Bobby W.:")
+print(change_reviewer_name("Bob Wilson", "Bobby W."))
 print()
-print("Authors born between 2000 and 2010:")
-print(filter_authors_by_birth_year(2000, 2010))
+print("Change A.J. to A. Johnson:")
+print(change_reviewer_name("A.J.", "A. Johnson"))
