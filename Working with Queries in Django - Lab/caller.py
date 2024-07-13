@@ -89,12 +89,43 @@ from main_app.models import Author, Book, Review
 
 ###############################################################################
 
-def order_books_by_year():
-    books = Book.objects.order_by("publication_year", "title")
+# def order_books_by_year():
+#     books = Book.objects.order_by("publication_year", "title")
+#     result = [
+#         f"{b.publication_year} year: {str(b)}" for b in books
+#     ]
+
+#     return "\n".join(result)
+
+# print(order_books_by_year())
+
+###############################################################################
+
+# def delete_review_by_id(review_id):
+#     review_to_delete = Review.objects.get(pk=review_id)
+#     review_to_delete.delete()
+#     return f"{str(review_to_delete)} was deleted"
+
+# print(delete_review_by_id(4))
+# print(delete_review_by_id(1))
+# print(delete_review_by_id(8))
+
+###############################################################################
+
+def filter_authors_by_nationalities(recieved_nationality):
+    filtered_authors = Author.objects.filter(nationality=recieved_nationality).order_by('first_name', 'last_name')
+
     result = [
-        f"{b.publication_year} year: {str(b)}" for b in books
+       a.biography if a.biography is not None else f"{a.first_name} {a.last_name}" for a in filtered_authors
     ]
 
     return "\n".join(result)
 
-print(order_books_by_year())
+print("American authors:")
+print(filter_authors_by_nationalities('American'))
+print()
+print("British authors:")
+print(filter_authors_by_nationalities('British'))
+print()
+print("Authors with no nationalities:")
+print(filter_authors_by_nationalities(None))
