@@ -62,4 +62,12 @@ from main_app.models import Author, Book, Review
 
 
 def find_books_by_genre_and_language(book_genre, book_language):
-    ...
+    books = Book.objects.filter(
+        genre=book_genre,
+        language=book_language
+    )
+    return books
+
+print(find_books_by_genre_and_language("Romance", "English"))
+print(find_books_by_genre_and_language("Poetry", "Spanish"))
+print(find_books_by_genre_and_language("Mystery", "English"))
