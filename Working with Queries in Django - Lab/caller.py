@@ -61,13 +61,28 @@ from main_app.models import Author, Book, Review
 # print(add_records_to_database())
 
 
-def find_books_by_genre_and_language(book_genre, book_language):
-    books = Book.objects.filter(
-        genre=book_genre,
-        language=book_language
-    )
-    return books
+# def find_books_by_genre_and_language(book_genre, book_language):
+#     books = Book.objects.filter(
+#         genre=book_genre,
+#         language=book_language
+#     )
+#     return books
 
-print(find_books_by_genre_and_language("Romance", "English"))
-print(find_books_by_genre_and_language("Poetry", "Spanish"))
-print(find_books_by_genre_and_language("Mystery", "English"))
+# print(find_books_by_genre_and_language("Romance", "English"))
+# print(find_books_by_genre_and_language("Poetry", "Spanish"))
+# print(find_books_by_genre_and_language("Mystery", "English"))
+
+###############################################################################
+
+def find_authors_nationalities():
+    filtered_authors = Author.objects.exclude(
+        nationality=None
+    )
+
+    result = [
+        f"{a.first_name} {a.last_name} is {a.nationality}" for a in filtered_authors
+    ]
+
+    return "\n".join(result)
+
+print(find_authors_nationalities())
