@@ -74,15 +74,27 @@ from main_app.models import Author, Book, Review
 
 ###############################################################################
 
-def find_authors_nationalities():
-    filtered_authors = Author.objects.exclude(
-        nationality=None
-    )
+# def find_authors_nationalities():
+#     filtered_authors = Author.objects.exclude(
+#         nationality=None
+#     )
 
+#     result = [
+#         f"{a.first_name} {a.last_name} is {a.nationality}" for a in filtered_authors
+#     ]
+
+#     return "\n".join(result)
+
+# print(find_authors_nationalities())
+
+###############################################################################
+
+def order_books_by_year():
+    books = Book.objects.order_by("publication_year", "title")
     result = [
-        f"{a.first_name} {a.last_name} is {a.nationality}" for a in filtered_authors
+        f"{b.publication_year} year: {str(b)}" for b in books
     ]
 
     return "\n".join(result)
 
-print(find_authors_nationalities())
+print(order_books_by_year())
