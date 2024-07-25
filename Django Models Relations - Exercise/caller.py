@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 import os
 import django
 from django.db.models import Avg
@@ -8,7 +9,7 @@ django.setup()
 
 # Import your models here
 
-from main_app.models import Artist, Author, Book, Product, Review, Song
+from main_app.models import Artist, Author, Book, Driver, DrivingLicense, Product, Review, Song
 
 # Create queries within functions
 
@@ -150,5 +151,40 @@ def delete_products_without_reviews():
 
 # # Calculate and print the average rating
 # print(calculate_average_rating_for_product_by_name("Laptop"))
+
+#############################################################################################
+
+def calculate_licenses_expiration_dates():
+    licenses = DrivingLicense.objects.order_by('-license_number')
+
+    return "\n".join(str(l) for l in licenses)
+
+
+def get_drivers_with_expired_licenses(due_date):
+    expiration_cutoff_date = due_date - timedelta(days=365)
+
+    drivers_with_expired_licenses = Driver.objects.filter(license__issue_date__gt=expiration_cutoff_date)
+
+    return drivers_with_expired_licenses
+
+
+# # Create drivers
+# driver1 = Driver.objects.create(first_name="Tanya", last_name="Petrova")
+# driver2 = Driver.objects.create(first_name="Ivan", last_name="Yordanov")
+
+# # Create licenses associated with drivers
+# license1 = DrivingLicense.objects.create(license_number="123", issue_date=date(2022, 10, 6), driver=driver1)
+
+# license2 = DrivingLicense.objects.create(license_number="456", issue_date=date(2022, 1, 1), driver=driver2)
+
+# # Calculate licenses expiration dates
+# expiration_dates = calculate_licenses_expiration_dates()
+# print(expiration_dates)
+
+# # Get drivers with expired licenses
+# drivers_with_expired_licenses = get_drivers_with_expired_licenses(date(2023, 1, 1))
+
+# for driver in drivers_with_expired_licenses:
+#     print(f"{driver.first_name} {driver.last_name} has to renew their driving license!")
 
 #############################################################################################
