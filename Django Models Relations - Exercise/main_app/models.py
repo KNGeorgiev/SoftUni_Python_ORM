@@ -9,4 +9,13 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=40)
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    author = models.ForeignKey(to=Author, on_delete=models.CASCADE) 
+    author = models.ForeignKey(to=Author, on_delete=models.CASCADE)
+
+
+class Song(models.Model):
+    title = models.CharField(max_length=100, unique=True)
+
+
+class Artist(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    songs = models.ManyToManyField(Song, related_name="artists")
