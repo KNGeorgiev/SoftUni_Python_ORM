@@ -45,3 +45,22 @@ class DrivingLicense(models.Model):
     def __str__(self):
         expiration_date = self.issue_date + timedelta(days=365)
         return f"License with number: {self.license_number} expires on {expiration_date}!"
+    
+
+class Owner(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class Car(models.Model):
+    model = models.CharField(max_length=50)
+    year = models.PositiveIntegerField()
+    owner = models.ForeignKey(to=Owner, on_delete=models.CASCADE, null=True, blank=True, related_name="cars")
+
+
+class Registration(models.Model):
+    registration_number = models.CharField(max_length=10, unique=True)
+    registration_date = models.DateField(null=True, blank=True)
+    car = models.OneToOneField(to=Car, on_delete=models.CASCADE, null=True, blank=True, related_name="registration")
