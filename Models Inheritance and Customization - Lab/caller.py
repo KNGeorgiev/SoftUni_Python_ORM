@@ -36,3 +36,14 @@ from main_app.models import Animal, Mammal, Bird, Reptile, Veterinarian, ZooKeep
 # print(f"{veterinarian_from_db.first_name} {veterinarian_from_db.last_name} is a Veterinarian.")
 
 ########################################################################################################################################
+
+# from main_app.models import ZooDisplayAnimal
+
+# is_proxy = ZooDisplayAnimal._meta.proxy
+
+# if is_proxy:
+#     print("ZooDisplayAnimal is a proxy model.")
+# else:
+#     print("ZooDisplayAnimal is not a proxy model.")
+
+########################################################################################################################################
