@@ -47,3 +47,9 @@ from main_app.models import Animal, Mammal, Bird, Reptile, Veterinarian, ZooKeep
 #     print("ZooDisplayAnimal is not a proxy model.")
 
 ########################################################################################################################################
+
+zookeeper = ZooKeeper(first_name="John", last_name="Doe", phone_number="0123456789", specialty="Fishes")
+zookeeper.full_clean()
+zookeeper.save()
+
+########################################################################################################################################

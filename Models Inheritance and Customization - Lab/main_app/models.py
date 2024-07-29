@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 
 # Create your models here.
 
@@ -36,6 +37,11 @@ class ZooKeeper(Employee):
     )
     specialty = models.CharField(max_length=10, choices=ANIMAL_TYPES)
     managed_animals = models.ManyToManyField(Animal)
+
+    def clean(self):
+        if self.specialty not in dict(self.ANIMAL_TYPES).keys():
+            raise ValidationError("Specialty must be a valid choice.")
+    
 
 class Veterinarian(Employee):
     license_number = models.CharField(max_length=10)
