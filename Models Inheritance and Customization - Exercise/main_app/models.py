@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 
 # Create your models here.
 
@@ -42,6 +43,7 @@ class VengeanceDemonHunter(DemonHunter):
 class FelbladeDemonHunter(DemonHunter):
     felblade_ability = models.CharField(max_length=100)
 
+#################################################################################################################
 
 class UserProfile(models.Model):
     username = models.CharField(max_length=70)
@@ -77,3 +79,26 @@ class Message(models.Model):
         message.save()
         
         return message
+    
+#################################################################################################################
+
+class StudentIDField(models.PositiveIntegerField):
+    def to_python(self, value):
+        try:
+            return int(value)
+        except ValueError:
+            raise ValueError("Invalid input for student ID")
+
+    def get_prep_value(self, value):
+        cleaned_value = self.to_python(value)
+
+        if cleaned_value <= 0:
+            raise ValidationError("ID cannot be less than or equal to zero")
+
+        return cleaned_value
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+    student_id = StudentIDField()
+
+#################################################################################################################
